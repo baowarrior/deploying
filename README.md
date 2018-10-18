@@ -24,9 +24,11 @@ replace Sqlite3 to Development test group
     bundle
 
 5 #//--- create Procfile
+
     Procfile
-    fyi This file must be named **Procfile** exactly.
-    #inser this line of code
+    
+fyi This file must be named **Procfile** exactly. Insert this line of code into the file and save it
+    
     web: bundle exec puma -t 5:5 -p ${PORT:-3000} -e ${RACK_ENV:-development}
 
 6 #//--- create Configuration file for puma
