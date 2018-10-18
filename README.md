@@ -67,7 +67,7 @@ replace Sqlite3 to Development test group
         
       cut this
       *
-      config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+      config.action_mailer.default_url_options = { host: 'localhost' }   you can remove port 3000
       *
       and paste in production file
       *
@@ -78,6 +78,25 @@ replace Sqlite3 to Development test group
     Heroku run rake db:migrate --app *name of app*
       
    10 #//--- AWS bucket Heroku config
-   
-     
-    
+         
+         -add gem 'aws-sdk', '~> 2.3'
+         
+  # config/environments/production.rb
+
+        config.paperclip_defaults = {
+        storage: :s3,
+        s3_credentials: {
+        bucket: ENV.fetch('S3_BUCKET_NAME'),
+        access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
+        secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY'),
+        s3_region: ENV.fetch('AWS_REGION'),
+        }
+        }
+          
+     Additionally, we’ll need to the set the AWS configuration variables on the Heroku application.
+        paste into command line via heroku
+        heroku config:set S3_BUCKET_NAME=your_bucket_name --app *nameofapp
+        heroku config:set AWS_ACCESS_KEY_ID=your_access_key_id --app *nameofapp
+        heroku config:set AWS_SECRET_ACCESS_KEY=your_secret_access_key --app *nameofapp
+        heroku config:set AWS_REGION=your_aws_region --app *nameofapp
+To check type heroku config
